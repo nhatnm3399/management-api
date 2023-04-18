@@ -1,8 +1,6 @@
 package com.example.managementapi.config;
 
-
 import io.jsonwebtoken.Claims;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@Component
-public class JwtFilter extends OncePerRequestFilter  {
 
+
+@Component
+public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
