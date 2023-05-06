@@ -53,4 +53,48 @@ public class ProductRestImpl implements ProductRest {
        }
         return ManagementUtils.getResponseEntity(ManagementConstants.SOMETHING_WENT_WRONG,HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public ResponseEntity<String> deleteProduct(Integer id) {
+        try{
+            return productService.deleteUpdate(id);
+        }catch(Exception ex){
+            ex.printStackTrace();
+
+        }
+        return ManagementUtils.getResponseEntity(ManagementConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateStatus(Map<String, String> requestMap) {
+        try{
+            return productService.updateStatus(requestMap);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return ManagementUtils.getResponseEntity(ManagementConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<ProductDTO>> getByCategory(Integer id) {
+       try{
+            return productService.getByCategory(id);
+       }catch (Exception ex){
+           ex.printStackTrace();
+       }
+       return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<ProductDTO> getProductById(Integer id) {
+       try{
+           return productService.getProductById(id);
+       }catch (Exception ex){
+           ex.printStackTrace();
+       }
+       return new ResponseEntity<>(new ProductDTO(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+
 }

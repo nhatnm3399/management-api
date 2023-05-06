@@ -6,7 +6,7 @@
     import com.example.managementapi.dto.UserDTO;
     import com.example.managementapi.model.User;
     import com.example.managementapi.constants.ManagementConstants;
-    import com.example.managementapi.repository.UserDao;
+    import com.example.managementapi.repository.UserRepository;
     import com.example.managementapi.service.UserService;
 
     import com.example.managementapi.utils.EmailUtils;
@@ -28,7 +28,7 @@
     public class UserServiceImpl implements UserService {
 
         @Autowired
-        UserDao userDao;
+        UserRepository userDao;
 
         @Autowired
         AuthenticationManager authenticationManager;

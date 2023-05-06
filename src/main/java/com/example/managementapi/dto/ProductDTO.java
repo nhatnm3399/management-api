@@ -7,20 +7,23 @@ import lombok.Data;
 public class ProductDTO {
 
 
-
-    int id;
+    Integer id;
 
     String name;
 
     String description;
 
-    int price;
+    Integer price;
 
     String status;
 
-    int categoryId;
+    Integer categoryId;
 
     String categoryName;
+
+    public ProductDTO() {
+
+    }
 
     public ProductDTO(Integer id, String name, String description, Integer price,String status,
                       Integer categoryId,String categoryName){
@@ -33,6 +36,27 @@ public class ProductDTO {
         this.categoryId=categoryId;
         this.categoryName=categoryName;
 
+    }
+
+    public ProductDTO(Integer id, String name){
+        this.id=id;
+        this.name=name;
+    }
+
+//        public ProductDTO(Integer id, String name, String description, Integer price){
+//            this.id=id;
+//            this.name=name;
+//            this.description=description;
+//            this.price=price;
+//
+//        }
+
+    public ProductDTO(Integer id, String name,String description,Integer price) {
+
+        this.id=id;
+        this.name=name;
+        this.description=description;
+        this.price = price;
     }
 
 

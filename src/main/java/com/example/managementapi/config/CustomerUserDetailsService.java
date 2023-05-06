@@ -1,6 +1,6 @@
 package com.example.managementapi.config;
 
-import com.example.managementapi.repository.UserDao;
+import com.example.managementapi.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +19,7 @@ import java.util.Objects;
 public class CustomerUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserDao userDao;
+    UserRepository userDao;
 
     private com.example.managementapi.model.User userDetail;
 

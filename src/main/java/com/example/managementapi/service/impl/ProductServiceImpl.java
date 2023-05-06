@@ -5,7 +5,7 @@ import com.example.managementapi.constants.ManagementConstants;
 import com.example.managementapi.dto.ProductDTO;
 import com.example.managementapi.model.Category;
 import com.example.managementapi.model.Product;
-import com.example.managementapi.repository.ProductDao;
+import com.example.managementapi.repository.ProductRepository;
 import com.example.managementapi.service.ProductService;
 import com.example.managementapi.utils.ManagementUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Autowired
-    ProductDao productDao;
+    ProductRepository productDao;
 
 
     @Autowired
@@ -108,6 +108,67 @@ public class ProductServiceImpl implements ProductService {
            ex.printStackTrace();
        }
         return ManagementUtils.getResponseEntity(ManagementConstants.SOMETHING_WENT_WRONG,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteUpdate(Integer id) {
+       try{
+            if(jwtFilter.isAdmin()){
+               Optional optional =  productDao.findById(id);
+               if (!optional.isEmpty()){
+                    productDao.deleteById(id);
+                    return ManagementUtils.getResponseEntity("Product Deleted Successfully", HttpStatus.OK);
+               }
+               return ManagementUtils.getResponseEntity("Product id does not exits.", HttpStatus.OK);
+            }else{
+                return ManagementUtils.getResponseEntity(ManagementConstants.UNAUTHORIZED_ACCESS,HttpStatus.UNAUTHORIZED);
+            }
+       }catch (Exception ex){
+           ex.printStackTrace();
+       }
+        return ManagementUtils.getResponseEntity(ManagementConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateStatus(Map<String, String> requestMap) {
+       try{
+           if(jwtFilter.isAdmin()){
+               Optional optional =  productDao.findById(Integer.parseInt(requestMap.get("id")));
+               if (!optional.isEmpty()){
+                    productDao.updateProductStatus(requestMap.get("status"),Integer.parseInt(requestMap.get("id")));
+                    return ManagementUtils.getResponseEntity("Product Status Updated Successfully", HttpStatus.OK);
+               }
+               return ManagementUtils.getResponseEntity("Product id does not exist.", HttpStatus.OK);
+           }else{
+               return ManagementUtils.getResponseEntity(ManagementConstants.UNAUTHORIZED_ACCESS,HttpStatus.UNAUTHORIZED);
+           }
+
+       }catch(Exception ex){
+           ex.printStackTrace();
+
+       }
+       return  ManagementUtils.getResponseEntity(ManagementConstants.SOMETHING_WENT_WRONG,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<ProductDTO>> getByCategory(Integer id) {
+        try{
+            return new ResponseEntity<>(productDao.getProductByCategory(id), HttpStatus.OK);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @Override
+    public ResponseEntity<ProductDTO> getProductById(Integer id) {
+        try{
+            return new ResponseEntity<>(productDao.getProductById(id), HttpStatus.OK);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new ProductDTO(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

@@ -5,7 +5,7 @@ package com.example.managementapi.service.impl;
 import com.example.managementapi.config.JwtFilter;
 import com.example.managementapi.constants.ManagementConstants;
 import com.example.managementapi.model.Category;
-import com.example.managementapi.repository.CategoryDao;
+import com.example.managementapi.repository.CategoryRepository;
 import com.example.managementapi.service.CategoryService;
 import com.example.managementapi.utils.ManagementUtils;
 import com.google.common.base.Strings;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
-    CategoryDao categoryDao;
+    CategoryRepository categoryDao;
 
 
     @Autowired
